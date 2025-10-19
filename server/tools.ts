@@ -9,7 +9,7 @@ import {
   type PARAMS,
   type UpdatedEventData,
 } from "./types/type.ts";
-import contactList from "./contacts.json";
+
 
 export const getEventTool = tool(
   async (params) => {
@@ -183,32 +183,32 @@ type CONTACT = {
    name: string;
 }
 
-export const getContactTool = tool(
-  async (params) => {
-     const {name} = params as CONTACT;
-     const contactListData = contactList.contactList;
-    try {
-      const foundContact = contactListData.find(contact => contact.name.toLowerCase().includes(name.toLowerCase()));
+// export const getContactTool = tool(
+//   async (params) => {
+//      const {name} = params as CONTACT;
+//      const contactListData = contactList.contactList;
+//     try {
+//       const foundContact = contactListData.find(contact => contact.name.toLowerCase().includes(name.toLowerCase()));
 
-      if(foundContact){
-        return `Found contact: ${foundContact.name} -- ${foundContact.email}`
-      }else{
-        return `Sorry No contact Found for ${name}`
-      }
+//       if(foundContact){
+//         return `Found contact: ${foundContact.name} -- ${foundContact.email}`
+//       }else{
+//         return `Sorry No contact Found for ${name}`
+//       }
      
-    } catch (error) {
-      console.error("bsdk skill issue");
-      return "skill issue"
-    }
-  },
-  {
-    name: "get_contact_email",
-    description:
-      "Get contact email by name. Returns structured data for use in other tools.",
-    schema: z.object({
-      name: z.string().describe("Name of the person to find email for"),
-    }),
-  }
-);
+//     } catch (error) {
+//       console.error("bsdk skill issue");
+//       return "skill issue"
+//     }
+//   },
+//   {
+//     name: "get_contact_email",
+//     description:
+//       "Get contact email by name. Returns structured data for use in other tools.",
+//     schema: z.object({
+//       name: z.string().describe("Name of the person to find email for"),
+//     }),
+//   }
+// );
 
 

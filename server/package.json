@@ -4,7 +4,9 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "nodemon --watch './**/*.ts' --exec 'bun run server.ts' "
+    "dev": "nodemon --watch './**/*.ts' --exec 'bun run server.ts' ",
+    "start": "bun run server.ts",
+    "build": "echo 'No build step required for Bun'"
   },
   "devDependencies": {
     "@types/bun": "latest",

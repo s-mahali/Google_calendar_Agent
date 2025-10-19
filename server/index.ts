@@ -2,7 +2,6 @@ import { ChatGroq } from "@langchain/groq";
 import {
   createEventTool,
   deleteEventTool,
-  getContactTool,
   getEventTool,
   updateEventTool,
 } from "./tools.js";
@@ -19,7 +18,7 @@ const tools: any = [
   getEventTool,
   updateEventTool,
   deleteEventTool,
-  getContactTool,
+ 
 ];
 const toolNode = new ToolNode(tools);
 
