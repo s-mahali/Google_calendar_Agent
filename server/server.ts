@@ -14,7 +14,7 @@ import Session from "./models/sessionModel.ts";
 
 const app = express();
 const corsOption = {
-  origin: ["https://google-calendar-agent.vercel.app/"],
+  origin: ["https://google-calendar-agent.vercel.app"],
   credentials: true,
 };
 app.use(express.json());
@@ -95,7 +95,7 @@ app.get("/google-callback", async (req, res) => {
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "PRODUCTION",
-      sameSite: "strict",
+      sameSite: "none",
       maxAge: 7 * 24 * 60 * 60 * 1000, //1week
     });
     return res.redirect("https://google-calendar-agent.vercel.app/new");
@@ -126,7 +126,7 @@ app.post("/refresh-token", (req, res) => {
     res.cookie("token", newToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "PRODUCTION",
-      sameSite: "strict",
+      sameSite: "none",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
