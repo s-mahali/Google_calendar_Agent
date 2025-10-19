@@ -1,6 +1,6 @@
 import axios from "axios"
 export const serviceAxiosInstance = axios.create({
-    baseURL: "http://localhost:3600",
+    baseURL: "https://google-calendar-agent-i68n.onrender.com",
     withCredentials: true,
     headers: {
         "Content-Type": "application/json"

@@ -37,7 +37,7 @@ const UpperHeroComp = () => {
                 hover:shadow-[0_0_25px_6px_rgba(59,130,246,0.8)] 
                 transition"
       >
-        <Link to={isAuthenticated ? '/new' : 'http://localhost:3600/auth'} className="text-lg font-semibold text-neutral-800">Manage calendar with chrona</Link>
+        <Link to={isAuthenticated ? '/new' : 'https://google-calendar-agent-i68n.onrender.com/auth'} className="text-lg font-semibold text-neutral-800">Manage calendar with chrona</Link>
       </div>
     </div>
   );
