@@ -98,10 +98,10 @@ app.get("/google-callback", async (req, res) => {
       sameSite: "strict",
       maxAge: 7 * 24 * 60 * 60 * 1000, //1week
     });
-    return res.redirect("https://google-calendar-agent.vercel.app//new");
+    return res.redirect("https://google-calendar-agent.vercel.app/new");
   } catch (error) {
     console.error("error", error);
-    return res.redirect("https://google-calendar-agent.vercel.app//error");
+    return res.redirect("https://google-calendar-agent.vercel.app/error");
   }
 });
 
