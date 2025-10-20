@@ -98,7 +98,7 @@ app.get("/google-callback", async (req, res) => {
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "PRODUCTION",
-      sameSite: "strict",
+      sameSite: "none",
       maxAge: 7 * 24 * 60 * 60 * 1000, //1week
     });
     
@@ -134,7 +134,7 @@ app.post("/refresh-token", (req, res) => {
     res.cookie("token", newToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "PRODUCTION",
-      sameSite: "strict",
+      sameSite: "none",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
