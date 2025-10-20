@@ -14,12 +14,15 @@ import Session from "./models/sessionModel.ts";
 
 const app = express();
 const corsOption = {
-  origin: ["https://google-calendar-agent.vercel.app"],
+  origin: ["https://google-calendar-agent.vercel.app", 'http://localhost:5173'],
   credentials: true,
+  
 };
+
+app.use(cors(corsOption));
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors(corsOption));
+
 
 export const oauth2Client = new google.auth.OAuth2(
   process.env.GOOGLE_CLIENT_ID,
@@ -95,10 +98,15 @@ app.get("/google-callback", async (req, res) => {
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "PRODUCTION",
-      sameSite: "none",
+      sameSite: "strict",
       maxAge: 7 * 24 * 60 * 60 * 1000, //1week
     });
-    return res.redirect("https://google-calendar-agent.vercel.app/new");
+    
+    if(process.env.NODE_ENV === 'DEV'){
+      return res.redirect("http://localhost:5173/new");
+    }else{
+      return res.redirect("https://google-calendar-agent.vercel.app/new");
+    }
   } catch (error) {
     console.error("error", error);
     return res.redirect("https://google-calendar-agent.vercel.app/error");
@@ -126,7 +134,7 @@ app.post("/refresh-token", (req, res) => {
     res.cookie("token", newToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "PRODUCTION",
-      sameSite: "none",
+      sameSite: "strict",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
@@ -143,7 +151,7 @@ app.post(
     try {
       const { query, thread_id } = req.body;
       const userId = req.user?.id;
-      console.log("user", req.user?.username);
+      console.log("user", req.user?.id);
 
       if (!query.trim() || !thread_id) {
         return res.status(400).json({
@@ -258,15 +266,24 @@ app.get(
   "/me",
   isAuthenticated,
   (req: express.Request & { user?: ReqUser }, res) => {
-    return res.status(200).json({
+   try {
+     return res.status(200).json({
       success: true,
       message: "User is authenticated",
       user: req.user,
     });
+   } catch (error) {
+       return res.status(500).json({
+      success: false,
+      message: "Something went wrong",
+      
+    });
+   }
   }
 );
+const port = process.env.PORT || 3600
 
-app.listen(3600, () => {
+app.listen(port, () => {
   connectDB()
     .then(() => {
       initializeAgent();
