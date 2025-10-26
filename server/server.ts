@@ -97,7 +97,7 @@ app.get("/google-callback", async (req, res) => {
     console.log("token", token);
     res.cookie("token", token, {
       httpOnly: true,
-      secure: true",
+      secure: true,
       sameSite: "strict",
       maxAge: 7 * 24 * 60 * 60 * 1000, //1week
     });
@@ -184,6 +184,7 @@ app.post(
       await Session.findOneAndUpdate(
         { thread_id: thread_id },
         {
+          $set: {userId: userId},
           $push: {
             messages: {
               $each: [
@@ -192,6 +193,7 @@ app.post(
               ],
             },
           },
+          
         },
         { upsert: true, new: true }
       );
@@ -210,9 +212,11 @@ app.post(
   }
 );
 
-app.get("/session", isAuthenticated, async (req, res) => {
+app.get("/session", isAuthenticated, async (req: express.Request & {user?: ReqUser}, res) => {
   try {
-    const response = await Session.find().limit(10).sort({ _id: -1 });
+    const userId = req?.user?.id;
+    console.log("userId while fetching session", userId)
+    const response = await Session.find({userId}).limit(10).sort({ _id: -1 });
     console.log("session Response", response.length);
     return res.status(200).json({
       message: "session fetched successfully",
@@ -227,16 +231,17 @@ app.get("/session", isAuthenticated, async (req, res) => {
   }
 });
 
-app.get("/session/:thread_id", isAuthenticated, async (req, res) => {
+app.get("/session/:thread_id", isAuthenticated, async (req: express.Request & {user?: ReqUser}, res) => {
   try {
     const { thread_id } = req.params;
+    const userId = req?.user?.id;
     if (!thread_id) {
       return res.status(400).json({
         message: "Thread ID is required",
         success: false,
       });
     }
-    const response = await Session.findOne({ thread_id }).select(
+    const response = await Session.findOne({ thread_id,  userId}).select(
       "messages createdAt thread_id"
     );
 
@@ -287,7 +292,7 @@ app.listen(port, () => {
   connectDB()
     .then(() => {
       initializeAgent();
-      console.log("Server is running on port 3600");
+      console.log(`Server is running on port ${port}`);
     })
     .catch((error) => {
       console.log("Error Running Server", error);
