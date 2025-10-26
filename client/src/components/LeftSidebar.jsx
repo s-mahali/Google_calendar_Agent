@@ -7,7 +7,8 @@ const LeftSidebar = () => {
   const handleGoogleCalendarAuth = async () => {
    console.log("click")
     try {
-       window.location.href = import.meta.env.VITE_NODE_ENV === "PROD" ? 'https://google-calendar-agent-i68n.onrender.com/auth' : 'http://localhost:3600/auth'
+       window.location.href = import.meta.env.PROD ? 'https://google-calendar-agent-i68n.onrender.com/auth' : 'http://localhost:3600/auth'
+       console.log("vite env", import.meta.env.PROD)
        
     } catch (error) {
       console.error("error authenticating user", error?.message)

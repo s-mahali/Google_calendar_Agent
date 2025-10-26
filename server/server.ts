@@ -103,8 +103,10 @@ app.get("/google-callback", async (req, res) => {
     });
     
     if(process.env.NODE_ENV === 'DEV'){
+      console.log("if", process.env.NODE_ENV)
       return res.redirect("http://localhost:5173/new");
     }else{
+      console.log("else", process.env.NODE_ENV)
       return res.redirect("https://google-calendar-agent.vercel.app/new");
     }
   } catch (error) {
