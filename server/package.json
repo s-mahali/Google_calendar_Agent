@@ -1,11 +1,11 @@
 {
   "name": "server",
-  "module": "index.ts",
+  "module": "app.ts",
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "nodemon --watch './**/*.ts' --exec 'bun run server.ts' ",
-    "start": "bun run server.ts",
+    "dev": "nodemon --watch './**/*.ts' --exec 'bun run app.ts' ",
+    "start": "bun run app.ts",
     "build": "echo 'No build step required for Bun'"
   },
   "devDependencies": {

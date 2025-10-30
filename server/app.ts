@@ -288,7 +288,7 @@ app.get(
    }
   }
 );
-const port = process.env.PORT || 3600
+const port = process.env.PORT || 3000
 
 app.listen(port, () => {
   connectDB()

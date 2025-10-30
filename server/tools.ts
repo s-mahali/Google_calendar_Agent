@@ -1,6 +1,6 @@
 import { tool } from "@langchain/core/tools";
 import z from "zod";
-import { calendar } from "./server.ts";
+import { calendar } from "./app.ts";
 import {
   createEventSchema,
   getEventSchema,
